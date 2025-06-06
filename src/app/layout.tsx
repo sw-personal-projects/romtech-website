@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme-provider"
 import "./globals.css";
-import { ThemeModeToggle } from "@/components/theme-switch";
+import Header from "@/components/menu/header";
+import Footer from "@/components/footer";
 
 
 export const metadata: Metadata = {
@@ -18,17 +19,20 @@ export default function RootLayout(
 
     }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html suppressHydrationWarning lang="en">
       <head />
-      <body>
+      <body suppressHydrationWarning className="relative min-h-[100vh] w-full bg-background">
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >
-          <ThemeModeToggle />
-          {children}
+          <>
+            <Header />
+            {children}
+            <Footer />
+          </>
         </ThemeProvider>
       </body>
     </html>
