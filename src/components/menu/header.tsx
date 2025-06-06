@@ -133,7 +133,7 @@ export default function Header() {
                 {/* Logo Section */}
                 <div>
                     <Image
-                        src='/logo.png'
+                        src='/Logo.png'
                         width={50}
                         height={50}
                         alt="logo"
