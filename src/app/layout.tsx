@@ -4,7 +4,6 @@ import "./globals.css";
 import Header from "@/components/menu/header";
 import Footer from "@/components/footer";
 
-
 export const metadata: Metadata = {
   title: "ROM-TECH",
   description: "Software company specializing in web, app development and technology solutions.",
