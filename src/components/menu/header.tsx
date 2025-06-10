@@ -2,36 +2,33 @@
 
 import * as React from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { useState, useEffect, useRef } from "react"
-import { Menu, X, ChevronDown, ChevronUp } from "lucide-react"
-import gsap from "gsap"
-
+import { Menu, X } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
+import { ThemeModeToggle } from "../theme-switch"
+import { cn } from "@/lib/utils"
 import {
     NavigationMenu,
-    NavigationMenuContent,
     NavigationMenuItem,
     NavigationMenuLink,
     NavigationMenuList,
-    NavigationMenuTrigger,
-    navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
-import { ThemeModeToggle } from "../theme-switch"
-import Image from "next/image"
-import { cn } from "@/lib/utils"
 
 export default function Header() {
     const [isOpen, setIsOpen] = useState(false)
     const [isScrolled, setIsScrolled] = useState(false)
-    const [openSubmenu, setOpenSubmenu] = useState<string | null>(null)
-    const mobileMenuRef = useRef<HTMLDivElement>(null)
-    const mobileMenuBgRef = useRef<HTMLDivElement>(null)
-    const mobileMenuPanelRef = useRef<HTMLDivElement>(null)
 
-    // Toggle submenu
-    const toggleSubmenu = (menu: string) => {
-        setOpenSubmenu(openSubmenu === menu ? null : menu)
-    }
+    const menuItems = [
+        { label: "Home", href: "/" },
+        { label: "About", href: "/about" },
+        { label: "Contact", href: "/contact" },
+        { label: "Services", href: "/services" },
+        { label: "Our Projects", href: "/our-projects" },
+        { label: "Announcement", href: "/announcement" },
+    ]
 
+    // Scroll shadow
     useEffect(() => {
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 10)
@@ -40,328 +37,117 @@ export default function Header() {
         return () => window.removeEventListener("scroll", handleScroll)
     }, [])
 
-    // Disable scroll when mobile menu is open
+    // Lock scroll when mobile menu is open
     useEffect(() => {
-        if (isOpen) {
-            document.body.style.overflow = 'hidden'
-        } else {
-            document.body.style.overflow = ''
-        }
-        return () => {
-            document.body.style.overflow = ''
-        }
+        document.body.style.overflow = isOpen ? "hidden" : ""
     }, [isOpen])
 
-    // GSAP animations for mobile menu
-    useEffect(() => {
-        if (isOpen) {
-            // Show menu animation
-            gsap.timeline()
-                .set(mobileMenuRef.current, { display: "block" })
-                .fromTo(mobileMenuBgRef.current,
-                    { opacity: 0 },
-                    { opacity: 1, duration: 0.3, ease: "power2.out" }
-                )
-                .fromTo(mobileMenuPanelRef.current,
-                    { x: "-100%" },
-                    { x: "0%", duration: 0.3, ease: "power2.out" },
-                    "<"
-                )
-        } else {
-            // Hide menu animation
-            if (mobileMenuRef.current) {
-                gsap.timeline()
-                    .to(mobileMenuPanelRef.current,
-                        { x: "-100%", duration: 0.2, ease: "power2.in" }
-                    )
-                    .to(mobileMenuBgRef.current,
-                        { opacity: 0, duration: 0.2, ease: "power2.in" },
-                        "<"
-                    )
-                    .set(mobileMenuRef.current, { display: "none" })
-            }
-            // Close all submenus when main menu closes
-            setOpenSubmenu(null)
-        }
-    }, [isOpen])
 
-    // GSAP animations for submenu
-    useEffect(() => {
-        const submenu = document.getElementById('mobile-submenu')
-        if (submenu) {
-            if (openSubmenu === 'services') {
-                gsap.fromTo(submenu,
-                    { height: 0, opacity: 0 },
-                    { height: 'auto', opacity: 1, duration: 0.3, ease: "power2.out" }
-                )
-            } else if (openSubmenu === null) {
-                gsap.to(submenu,
-                    { height: 0, opacity: 0, duration: 0.2, ease: "power2.in" }
-                )
-            }
-        }
-    }, [openSubmenu])
 
-    // Close menu when clicking outside or on a link
+    const closeMenu = () => {
+        setIsOpen(false)
+    }
+
+    // Close on outside click
+    const menuRef = useRef<HTMLDivElement>(null)
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
-            if (isOpen && !(event.target as Element).closest(".mobile-menu")) {
-                setIsOpen(false)
+            if (isOpen && menuRef.current && !menuRef.current.contains(event.target as Node)) {
+                closeMenu()
             }
         }
         document.addEventListener("mousedown", handleClickOutside)
         return () => document.removeEventListener("mousedown", handleClickOutside)
     }, [isOpen])
 
-    // Close menu when pressing Escape key
+    // Close on Escape
     useEffect(() => {
-        const handleEscape = (event: KeyboardEvent) => {
-            if (event.key === "Escape" && isOpen) {
-                setIsOpen(false)
-            }
+        const handleEscape = (e: KeyboardEvent) => {
+            if (e.key === "Escape") closeMenu()
         }
         document.addEventListener("keydown", handleEscape)
         return () => document.removeEventListener("keydown", handleEscape)
-    }, [isOpen])
+    }, [])
 
     return (
-        <div className={cn(
-            "h-20 w-full border-b border-accent/50 bg-background/30 sticky top-0 z-50 backdrop-blur transition-all",
-            isScrolled ? "shadow-sm" : ""
+        <header className={cn(
+            "h-20 w-full sticky top-0 z-50 border-b border-white/20 bg-black backdrop-blur transition-all",
+            isScrolled && "shadow-sm"
         )}>
-            <div className="container mx-auto h-full flex justify-between items-center px-4">
-                {/* Logo Section */}
-                <div>
-                    <Image
-                        src='/Logo.png'
-                        width={50}
-                        height={50}
-                        alt="logo"
-                    />
-                </div>
+            <div className="container mx-auto flex h-full items-center justify-between px-4">
+                {/* Logo */}
+                <Link href="/">
+                    <Image src="/Logo.png" width={50} height={50} alt="Logo" />
+                </Link>
 
-                {/* Desktop Menu - hidden on mobile */}
-                <NavigationMenu className="hidden md:flex shadow-2xl backdrop-blur-[9.5px] rounded-[28px] border border-white/10 px-6 py-2">
+                {/* Desktop Nav */}
+                <NavigationMenu className="hidden md:flex py-2 rounded-[28px] border border-white/10 backdrop-blur-[9.5px] shadow-2xl px-3">
                     <NavigationMenuList>
-                        <NavigationMenuItem>
-                            <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                                <Link href="/">Home</Link>
-                            </NavigationMenuLink>
-                        </NavigationMenuItem>
-                        <NavigationMenuItem>
-                            <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                                <Link href="/about">About</Link>
-                            </NavigationMenuLink>
-                        </NavigationMenuItem>
-                        <NavigationMenuItem>
-                            <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                                <Link href="/contact">Contact</Link>
-                            </NavigationMenuLink>
-                        </NavigationMenuItem>
-                        <NavigationMenuItem>
-                            <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                                <Link href="/our-projects">Our Projects</Link>
-                            </NavigationMenuLink>
-                        </NavigationMenuItem>
-                        <NavigationMenuItem>
-                            <NavigationMenuTrigger>Services</NavigationMenuTrigger>
-                            <NavigationMenuContent>
-                                <ul className="grid w-[400px] gap-3 p-4">
-                                    <NavigationMenuLink asChild>
-                                        <Link href="/services/app-development">
-                                            <div className="font-medium">App Development</div>
-                                            <div className="text-muted-foreground text-sm">
-                                                Custom mobile applications for iOS and Android, built with modern frameworks.
-                                            </div>
-                                        </Link>
-                                    </NavigationMenuLink>
-                                    <NavigationMenuLink asChild>
-                                        <Link href="/services/web-development">
-                                            <div className="font-medium">Web Development</div>
-                                            <div className="text-muted-foreground text-sm">
-                                                Responsive websites, web applications, and e-commerce solutions tailored to your needs.
-                                            </div>
-                                        </Link>
-                                    </NavigationMenuLink>
-                                    <NavigationMenuLink asChild>
-                                        <Link href="/services/graphic-design">
-                                            <div className="font-medium">Graphic Design</div>
-                                            <div className="text-muted-foreground text-sm">
-                                                Brand identity, UI/UX design, marketing materials, and visual content creation.
-                                            </div>
-                                        </Link>
-                                    </NavigationMenuLink>
-                                    <NavigationMenuLink asChild>
-                                        <Link href="/services/hardware-integration">
-                                            <div className="font-medium">Hardware & System Integration</div>
-                                            <div className="text-muted-foreground text-sm">
-                                                Custom hardware solutions and seamless integration with existing systems.
-                                            </div>
-                                        </Link>
-                                    </NavigationMenuLink>
-                                    <NavigationMenuLink asChild>
-                                        <Link href="/services/consulting">
-                                            <div className="font-medium">IT Consulting</div>
-                                            <div className="text-muted-foreground text-sm">
-                                                Strategic technology advice and digital transformation consulting services.
-                                            </div>
-                                        </Link>
-                                    </NavigationMenuLink>
-                                </ul>
-                            </NavigationMenuContent>
-                        </NavigationMenuItem>
-                        <NavigationMenuItem>
-                            <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                                <Link href="/announcement">Announcement</Link>
-                            </NavigationMenuLink>
-                        </NavigationMenuItem>
+                        {menuItems.map((item) => (
+                            <NavigationMenuItem key={item.label} className="p-0">
+                                <NavigationMenuLink asChild className="hover:bg-primary hover:text-primary-foreground hover:scale-105 transition-all duration-300 rounded-[28px]">
+                                    <Link className="uppercase font-medium text-xs text-white" href={item.href}>{item.label}</Link>
+                                </NavigationMenuLink>
+                            </NavigationMenuItem>
+                        ))}
                     </NavigationMenuList>
                 </NavigationMenu>
 
-                {/* Mobile Menu Button - hidden on desktop */}
-                <div className="flex items-center gap-4 md:hidden">
+                {/* Mobile Nav Toggle */}
+                <div className="md:hidden flex items-center gap-4">
                     <ThemeModeToggle />
-                    <button
-                        onClick={() => setIsOpen(!isOpen)}
-                        className="p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                        aria-label="Toggle menu"
-                    >
+                    <button className="text-white" onClick={() => setIsOpen(!isOpen)} aria-label="Toggle Menu">
                         {isOpen ? <X size={24} /> : <Menu size={24} />}
                     </button>
                 </div>
 
-                {/* Desktop Theme Toggle - hidden on mobile */}
+                {/* Desktop Theme Toggle */}
                 <div className="hidden md:block">
                     <ThemeModeToggle />
                 </div>
-
-                {/* Mobile Menu - appears when hamburger is clicked */}
-                <div
-                    ref={mobileMenuRef}
-                    className="mobile-menu fixed inset-0 top-20 h-screen z-50 md:hidden"
-                    style={{ display: 'none' }}
-                >
-                    {/* Background overlay */}
-                    <div
-                        ref={mobileMenuBgRef}
-                        className="absolute inset-0 bg-black/50 backdrop-blur-lg"
-                        onClick={() => setIsOpen(false)}
-                    />
-
-                    {/* Menu panel */}
-                    <div
-                        ref={mobileMenuPanelRef}
-                        className="absolute left-0 top-0 h-full w-[80%] bg-background shadow-xl overflow-y-auto"
-                    >
-                        <div className="h-full px-4 py-6">
-                            <ul className="space-y-4">
-                                <li>
-                                    <Link
-                                        href="/"
-                                        className="block py-2 text-lg font-medium hover:text-primary transition-colors"
-                                        onClick={() => setIsOpen(false)}
-                                    >
-                                        Home
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        href="/docs"
-                                        className="block py-2 text-lg font-medium hover:text-primary transition-colors"
-                                        onClick={() => setIsOpen(false)}
-                                    >
-                                        About
-                                    </Link>
-                                </li>
-                                <li className="pt-2">
-                                    <button
-                                        onClick={() => toggleSubmenu('services')}
-                                        className="flex items-center justify-between w-full py-2 text-lg font-medium hover:text-primary transition-colors"
-                                    >
-                                        <span>Services</span>
-                                        {openSubmenu === 'services' ? (
-                                            <ChevronUp size={20} />
-                                        ) : (
-                                            <ChevronDown size={20} />
-                                        )}
-                                    </button>
-                                    <div
-                                        id="mobile-submenu"
-                                        className="overflow-hidden"
-                                        style={{ height: 0, opacity: 0 }}
-                                    >
-                                        <ul className="pl-4 space-y-3 mt-2 border-l border-muted">
-                                            <li>
-                                                <Link
-                                                    href="/services/app-development"
-                                                    className="block py-1.5 text-base hover:text-primary transition-colors"
-                                                    onClick={() => setIsOpen(false)}
-                                                >
-                                                    App Development
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link
-                                                    href="/services/web-development"
-                                                    className="block py-1.5 text-base hover:text-primary transition-colors"
-                                                    onClick={() => setIsOpen(false)}
-                                                >
-                                                    Web Development
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link
-                                                    href="/services/graphic-design"
-                                                    className="block py-1.5 text-base hover:text-primary transition-colors"
-                                                    onClick={() => setIsOpen(false)}
-                                                >
-                                                    Graphic Design
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link
-                                                    href="/services/hardware-integration"
-                                                    className="block py-1.5 text-base hover:text-primary transition-colors"
-                                                    onClick={() => setIsOpen(false)}
-                                                >
-                                                    Hardware & System Integration
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link
-                                                    href="/services/consulting"
-                                                    className="block py-1.5 text-base hover:text-primary transition-colors"
-                                                    onClick={() => setIsOpen(false)}
-                                                >
-                                                    IT Consulting
-                                                </Link>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li>
-                                    <Link
-                                        href="/docs"
-                                        className="block py-2 text-lg font-medium hover:text-primary transition-colors"
-                                        onClick={() => setIsOpen(false)}
-                                    >
-                                        Contact
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        href="/docs"
-                                        className="block py-2 text-lg font-medium hover:text-primary transition-colors"
-                                        onClick={() => setIsOpen(false)}
-                                    >
-                                        Announcement
-                                    </Link>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
             </div>
-        </div>
+
+            {/* Mobile Menu */}
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        ref={menuRef}
+                        className="fixed inset-0 h-[calc(100vh-80px)] top-20 z-50 md:hidden"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                    >
+                        {/* Overlay */}
+                        <div
+                            className="absolute inset-0 bg-black/50 backdrop-blur-lg"
+                            onClick={closeMenu}
+                        />
+
+                        {/* Menu Panel */}
+                        <motion.div
+                            className="absolute left-0 top-0 h-full w-[80%] bg-black shadow-xl overflow-y-auto px-4 py-6"
+                            initial={{ x: "-100%" }}
+                            animate={{ x: 0 }}
+                            exit={{ x: "-100%" }}
+                            transition={{ type: "tween", duration: 0.3 }}
+                        >
+                            <ul className="space-y-4">
+                                {menuItems.map((item) => (
+                                    <li key={item.label}>
+                                        <Link
+                                            href={item.href}
+                                            className="block text-sm uppercase font-medium py-2 text-white/80"
+                                            onClick={closeMenu}
+                                        >
+                                            {item.label}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </header>
     )
 }

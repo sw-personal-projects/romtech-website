@@ -1,0 +1,80 @@
+[
+  {
+    "id": 1,
+    "imageUrl": "/assets/projects/border-management.jpeg",
+    "title": "Border Management Solution",
+    "desc": "The Border Management System leverages advanced biometric technologies to enhance security and streamline.",
+    "detailDes": [
+      "The Border Management System leverages advanced biometric technologies to enhance security and streamline entry and exit processes. Facial recognition serves as the primary method of verification, providing fast, contactless, and reliable identification for travelers. This ensures a seamless and efficient experience while maintaining robust security standards.",
+      "As a secondary solution, the system incorporates fingerprint verification and document authentication to provide multi-layered security. These additional verification methods act as a fallback to support facial recognition and ensure accuracy and reliability in cases of anomalies.",
+      "This comprehensive approach ensures secure, efficient, and scalable border management, enhancing traveler convenience while safeguarding national security."
+    ],
+    "category": "app",
+    "createdAt": "2025-04-24"
+  },
+  {
+    "id": 2,
+    "imageUrl": "/assets/projects/egate.jpeg",
+    "title": "E-gate",
+    "desc": "Facial recognition E-gates. Travellers using the Pedestrian Terminal in Phuentshogling will now benefit.",
+    "detailDes": [
+       "The E-gate system facilitates faster pedestrian processing through automated facial recognition checkpoints.",
+       "This improves efficiency and minimizes human interaction, ensuring a seamless cross-border movement experience.",
+      "It also enhances security by matching traveler profiles against government databases in real time."
+    ],
+    "category": "app",
+    "createdAt": "2025-04-25"
+  },
+  {
+    "id": 3,
+    "imageUrl": "/assets/projects/kuensel.webp",
+    "title": "Kuensel News App",
+    "desc": "The Kuensel News App is your gateway to reliable and timely news from Bhutan, delivered in a convenient format.",
+    "detailDes": [
+       "The Kuensel News App brings you up-to-date news from Bhutan with a clean and user-friendly interface.",
+       "Push notifications and real-time updates ensure that users stay informed about national and regional events.",
+      "Offline reading and category-wise browsing improve user engagement and experience."
+    ],
+    "category": "app",
+    "createdAt": "2025-03-20"
+  },
+  {
+    "id": 4,
+    "imageUrl": "/assets/projects/yellow-bt.jpg",
+    "title": "Yellow Bhutan Website",
+    "desc": "Yellow Bhutan is a premier online platform dedicated to celebrating Bhutan's culture and traditions.",
+    "detailDes": [
+       "Yellow Bhutan showcases articles, photography, and videos about Bhutanese heritage and contemporary culture.",
+       "The website is structured for intuitive navigation, allowing users to explore content by categories and themes.",
+      "Its modern design and accessibility features make it a key destination for both locals and international audiences."
+    ],
+    "category": "web",
+    "createdAt": "2025-02-18"
+  },
+  {
+    "id": 5,
+    "imageUrl": "/assets/projects/bbs.png",
+    "title": "BBS Website",
+    "desc": "The BBS website is designed with a focus on delivering better content, improved readability, and accessibility.",
+    "detailDes": [
+       "BBS's digital platform provides live streaming, news updates, and archived media content to users worldwide.",
+       "Responsive design ensures optimal user experience across all device types.",
+      "Multilingual support helps reach a diverse audience within Bhutan and internationally."
+    ],
+    "category": "web",
+    "createdAt": "2025-01-30"
+  },
+  {
+    "id": 6,
+    "imageUrl": "/assets/projects/immi.jpg",
+    "title": "Immigration Web App",
+    "desc": "Tourists can apply for their visa or permit through this website or engage authorized tour operators.",
+    "detailDes": [
+       "The Immigration Web App streamlines visa and permit applications with clear guidelines and secure digital submissions.",
+       "Integrated tour operator support allows travelers to plan trips efficiently and within regulatory requirements.",
+      "Real-time status tracking and notifications keep applicants informed throughout the process."
+    ],
+    "category": "web",
+    "createdAt": "2025-04-10"
+  }
+]

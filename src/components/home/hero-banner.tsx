@@ -216,7 +216,7 @@ export default function HeroBanner() {
                                     >
                                         {item.icon}
                                     </div>
-                                    <p className="text-sm font-medium text-foreground">{item.title}</p>
+                                    <p className="text-sm font-medium text-white">{item.title}</p>
                                     <p className="text-xs text-muted-foreground mt-1">Solutions</p>
                                 </div>
                             ))}
@@ -235,7 +235,7 @@ export default function HeroBanner() {
                     </Button>
                     <Button
                         size="lg"
-                        className="text-foreground border bg-transparent border-white hover:bg-white hover:text-black font-medium px-8 py-6 text-lg transition-all hidden md:inline-flex"
+                        className="border bg-transparent text-white border-white hover:bg-white hover:text-black font-medium px-8 py-6 text-lg transition-all hidden md:inline-flex"
                     >
                         Contact us
                     </Button>

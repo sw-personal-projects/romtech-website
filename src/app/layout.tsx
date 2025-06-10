@@ -3,6 +3,9 @@ import { ThemeProvider } from "@/components/theme-provider"
 import "./globals.css";
 import Header from "@/components/menu/header";
 import Footer from "@/components/footer";
+import { Toaster } from "@/components/ui/sonner"
+import ChatBotWidget from "@/components/chat-bot";
+
 
 export const metadata: Metadata = {
   title: "ROM-TECH",
@@ -18,19 +21,20 @@ export default function RootLayout(
 
     }) {
   return (
-    <html suppressHydrationWarning lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head />
       <body suppressHydrationWarning className="relative min-h-[100vh] w-full bg-background">
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
           enableSystem
-          disableTransitionOnChange
         >
           <>
             <Header />
             {children}
             <Footer />
+            <Toaster />
+            <ChatBotWidget />
           </>
         </ThemeProvider>
       </body>
