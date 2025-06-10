@@ -3,11 +3,13 @@
 import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { Button } from '../ui/button';
+import { useRouter } from 'next/navigation';
 
 export default function HeroBanner() {
     const containerRef = useRef<HTMLDivElement>(null);
     const floatingBgRef = useRef<HTMLDivElement>(null);
     const videoRef = useRef<HTMLVideoElement>(null);
+    const router = useRouter()
 
     useEffect(() => {
         const ctx = gsap.context(() => {
@@ -230,12 +232,15 @@ export default function HeroBanner() {
                         variant="default"
                         size="lg"
                         className="bg-primary text-primary-foreground hover:bg-primary/90 font-medium px-8 py-6 text-lg shadow-lg hover:shadow-primary/30 transition-all"
+                        onClick={() => router.push('/services')}
                     >
                         Explore services
                     </Button>
                     <Button
                         size="lg"
                         className="border bg-transparent text-white border-white hover:bg-white hover:text-black font-medium px-8 py-6 text-lg transition-all hidden md:inline-flex"
+                        onClick={() => router.push('/contact')}
+
                     >
                         Contact us
                     </Button>

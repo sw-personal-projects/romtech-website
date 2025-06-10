@@ -40,7 +40,7 @@ export function ProjectGrid({ projects }: ProjectGridProps) {
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xxl:grid-cols-4 gap-6">
             {projects.map((project, index) => (
-                <FadeInSlideUp delay={0.1 + index * 0.1} key={index}>
+                <FadeInSlideUp delay={0.01 + index * 0.1} key={index}>
                     <motion.div
                         key={`${project.title}-${index}`}
                         initial="offscreen"

@@ -3,6 +3,7 @@ import { Button } from "../ui/button";
 import { ProjectsSlider } from "./project-slider";
 import PopUp from "../animations/pop-up";
 import FlipIn from "../animations/flip-in";
+import Link from "next/link";
 
 export default async function OurProjectSection() {
     const projectData = await fetchProjectData();
@@ -21,9 +22,13 @@ export default async function OurProjectSection() {
                                 Our projects are a testament to our commitment to delivering innovative and effective solutions
                                 to our clients.
                             </p>
-                            <Button variant='outline' className="mt-10 w-full py-6 text-lg">
-                                Explore Projects
-                            </Button>
+                            <Link href='/our-projects'>
+                                <Button variant='outline' className="mt-10 w-full py-6 text-lg"
+                                >
+                                    Explore Projects
+                                </Button>
+                            </Link>
+
                         </PopUp>
 
                     </div>

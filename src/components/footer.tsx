@@ -1,8 +1,16 @@
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import Image from "next/image";
 import FlipBottomToTop from "./animations/flip-bottom-top";
+import Link from "next/link";
 
 export default function Footer() {
+    const menuItems = [
+        { label: "Our Services", href: "/services" },
+        { label: "About Us", href: "/about" },
+        { label: "Contact Us", href: "/contact" },
+        { label: "Our Projects", href: "/our-projects" },
+        { label: "Announcement", href: "/announcement" },
+    ]
     return (
         <FlipBottomToTop delay={0.2}>
             <footer className="py-16 px-6 sm:px-12 border-t border-white/15 md:mt-[200px] mt-[70px] bg-black">
@@ -30,9 +38,9 @@ export default function Footer() {
                     <div className="space-y-4">
                         <h3 className="text-sm font-medium uppercase tracking-wider">Quick Links</h3>
                         <ul className="space-y-3 text-white/80">
-                            {["Our Services", "Our Projects", "About Us", "Announcement", "Contact Us"].map((item) => (
-                                <li key={item}>
-                                    <a href="#" className="hover:text-white text-sm transition-all duration-200">{item}</a>
+                            {menuItems.map((item, index) => (
+                                <li key={index}>
+                                    <Link href={item.href} className="hover:text-white text-sm transition-all duration-200">{item.label}</Link>
                                 </li>
                             ))}
                         </ul>
