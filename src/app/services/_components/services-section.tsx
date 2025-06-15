@@ -26,7 +26,7 @@ const StackingCards = () => {
         {
             id: 2,
             title: "Web Development",
-            imageUrl: "/assets/services/web-development.png",
+            imageUrl: "/assets/services/Web-development.png",
             description:
                 "Our primary focus is on crafting visually appealing and engaging designs for both web and mobile interfaces. We believe that design plays a crucial role in bridging the emotional and credibility aspects of the end-user's interaction with the company, its services, and its products.",
         },
