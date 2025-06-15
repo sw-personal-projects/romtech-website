@@ -19,35 +19,35 @@ const StackingCards = () => {
         {
             id: 1,
             title: "System and Mobile App Development",
-            imageUrl: "https://romtech.bt/wp-content/uploads/2024/10/mobile-app-1024x899.png",
+            imageUrl: "/assets/services/mobile-app.png",
             description:
                 "Our team of highly skilled professionals is dedicated to staying at the forefront of technological advancements. With expertise in various programming languages, frameworks, and tools, we ensure that our software applications and mobile apps are not only cutting-edge but also user-friendly and efficient. We employ best practices in software development, ensuring robust, scalable, and secure solutions tailored to meet the unique requirements of each client. Our commitment to excellence drives us to deliver high-quality products that exceed client expectations and contribute to their business success.",
         },
         {
             id: 2,
             title: "Web Development",
-            imageUrl: "https://romtech.bt/wp-content/uploads/2024/10/Web-development.png",
+            imageUrl: "/assets/services/web-development.png",
             description:
                 "Our primary focus is on crafting visually appealing and engaging designs for both web and mobile interfaces. We believe that design plays a crucial role in bridging the emotional and credibility aspects of the end-user's interaction with the company, its services, and its products.",
         },
         {
             id: 3,
             title: "Hardware Equipment",
-            imageUrl: "https://romtech.bt/wp-content/uploads/2024/10/hardware-equipment-1-1024x718.png",
+            imageUrl: "/assets/services/hardware-equipment.png",
             description:
                 "Additionally, we provide a comprehensive range of ICT equipment, mechanical and electrical devices, home appliances, and accessories. Moreover, we offer end-to-end integration services with software systems, ensuring seamless connectivity and functionality between hardware and software components.",
         },
         {
             id: 4,
             title: "Audio-Visual Production",
-            imageUrl: "https://romtech.bt/wp-content/uploads/2024/10/audio-visual.png",
+            imageUrl: "/assets/services/audio.png",
             description:
                 "Our audio-visual production service offers a comprehensive solution for all your visual and auditory content needs. Whether you need professional video production, sound engineering, or a combination of both, we have the expertise and resources to deliver exceptional results.",
         },
         {
             id: 5,
             title: "Design Services",
-            imageUrl: "https://romtech.bt/wp-content/uploads/2024/10/design-services-1024x892.png",
+            imageUrl: "/assets/services/design-services.png",
             description:
                 "Our design services cover a broad spectrum of creative solutions, including logo design, brochure design, poster design, and more. We recognize the importance of impactful visual elements in establishing a robust brand identity and effectively conveying your message.",
         },
@@ -327,7 +327,7 @@ const StackingCards = () => {
                         ref={(el) => {
                             cardsRef.current[index] = el
                         }}
-                        className={`overflow-hidden rounded-3xl shadow-lg sticky top-20 mb-12 ${index % 2 === 0 ? "bg-gradient-to-br" : "bg-gradient-to-bl"
+                        className={`overflow-hidden rounded-3xl shadow-lg sticky top-20 mb-12 flex justify-center items-center ${index % 2 === 0 ? "bg-gradient-to-br" : "bg-gradient-to-bl"
                             } from-black to-gray-800 transform-gpu transition-shadow duration-300`}
                         style={{
                             minHeight: isMobile ? "auto" : "80vh",
