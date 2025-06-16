@@ -42,6 +42,11 @@ export default function TeamSection() {
             imageUrl: '/assets/team-member/karma-wangdi-tamang.jpeg',
         },
         {
+            name: 'Kelden Jamtsho',
+            role: "Maketing Officer",
+            imageUrl: "/assets/team-member/kelden-jamtsho.jpeg",
+        },
+        {
             name: 'Namgay Younten',
             role: 'UI/UX Designer and Photographer',
             imageUrl: '/assets/team-member/namgay-younten.png',
@@ -85,6 +90,11 @@ export default function TeamSection() {
             name: 'Tandin Phuntsho',
             role: 'Software Engineer',
             imageUrl: '/assets/team-member/tandin-phuntsho.jpeg',
+        },
+        {
+            name: 'Pravaat Chhitre',
+            role: 'Software Engineer',
+            imageUrl: '/assets/team-member/pravaat-chhitre.jpeg',
         },
         {
             name: 'Karma Lhamo',
