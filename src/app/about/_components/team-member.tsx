@@ -43,7 +43,7 @@ export default function TeamSection() {
         },
         {
             name: 'Kelden Jamtsho',
-            role: "Maketing Officer",
+            role: "Marketing Officer",
             imageUrl: "/assets/team-member/kelden-jamtsho.jpeg",
         },
         {
