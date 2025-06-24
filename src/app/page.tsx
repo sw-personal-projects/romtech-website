@@ -4,6 +4,7 @@ import ProgrammingLanguagesSection from "@/components/home/programming-language-
 import ServicesSection from "@/components/home/services-section";
 import WorkProcessSection from "@/components/home/work-process-section";
 
+
 export default function Home() {
   return (
     <main className="w-full min-h-[100vh] bg-background">
