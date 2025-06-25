@@ -1,7 +1,8 @@
-export default function Page() {
+
+export default async function Page() {
     return (
         <div>
-            <h1>HelLo</h1>
+            <h1>Dashboard</h1>
         </div>
     )
 }

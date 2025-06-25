@@ -1,9 +1,11 @@
 # *
 User-agent: *
 Allow: /
+Disallow: /auth/
+Disallow: /dashboard/
 
 # Host
-Host: https://romtech.bt/
+Host: https://romtech.bt
 
 # Sitemaps
 Sitemap: https://romtech.bt/sitemap.xml

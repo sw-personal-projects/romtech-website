@@ -1,7 +1,9 @@
-export default function Page() {
+import SignInForm from "@/components/signin-form";
+
+export default function SignIn() {
     return (
-        <div>
-            <h1>Sign In</h1>
+        <div className="flex justify-center items-center h-screen">
+            <SignInForm />
         </div>
     )
 }

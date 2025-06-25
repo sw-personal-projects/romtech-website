@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme-provider"
 import "./globals.css";
-import ClientLayout from "@/components/client-layout";
+import MainLayout from "@/components/layouts/main-layout";
 
 
 export const metadata: Metadata = {
@@ -21,14 +21,15 @@ export default function RootLayout(
     <html lang="en" suppressHydrationWarning>
       <head />
       <body className="relative min-h-[100vh] w-full bg-background">
+
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
           enableSystem
         >
-          <ClientLayout>
+          <MainLayout>
             {children}
-          </ClientLayout>
+          </MainLayout>
         </ThemeProvider>
       </body>
     </html>

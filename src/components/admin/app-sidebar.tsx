@@ -1,60 +1,129 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
+"use client"
+
+import * as React from "react"
+import {
+    FolderKanban,
+    Frame,
+    Home,
+    Info,
+    Mail,
+    Megaphone,
+    PieChart,
+    Settings,
+    Users,
+} from "lucide-react"
 
 import {
     Sidebar,
     SidebarContent,
+    SidebarFooter,
     SidebarGroup,
     SidebarGroupContent,
     SidebarGroupLabel,
+    SidebarHeader,
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
+    SidebarRail,
 } from "@/components/ui/sidebar"
+import { NavUser } from "./nav-user"
+import { UserProfile } from "./user-profile"
+import Link from "next/link"
 
-// Menu items.
-const items = [
-    {
-        title: "Home",
-        url: "#",
-        icon: Home,
+// nav items data.
+const data = {
+    user: {
+        name: "Sonam Wangchuk",
+        email: "s.wangchuk@romtech.bt",
+        avatar: "/avatars/shadcn.jpg",
     },
-    {
-        title: "Inbox",
-        url: "#",
-        icon: Inbox,
-    },
-    {
-        title: "Calendar",
-        url: "#",
-        icon: Calendar,
-    },
-    {
-        title: "Search",
-        url: "#",
-        icon: Search,
-    },
-    {
-        title: "Settings",
-        url: "#",
-        icon: Settings,
-    },
-]
+    contentManagement: [
+        {
+            name: "Home",
+            url: "/pages/home",
+            icon: Home
+        },
+        {
+            name: "About",
+            url: "/pages/about",
+            icon: Info
+        },
+        {
+            name: "Contact",
+            url: "/pages/contact",
+            icon: Mail
+        },
+        {
+            name: "Services",
+            url: "/pages/services",
+            icon: Settings
+        },
+        {
+            name: "Projects",
+            url: "/pages/projects",
+            icon: FolderKanban
+        },
+        {
+            name: "Announcements",
+            url: "/pages/announcements",
+            icon: Megaphone
+        }
+    ],
+    overview: [
+        {
+            name: "Dashboard",
+            url: "/dashboard",
+            icon: Frame
+        },
+        {
+            name: "Analytics",
+            url: "/analytics",
+            icon: PieChart,
+        },
+        {
+            name: "User Management",
+            url: "/users",
+            icon: Users
+        }
+    ],
+}
 
-export function AppSidebar() {
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     return (
-        <Sidebar>
+        <Sidebar collapsible="icon" {...props}>
+            <SidebarHeader>
+                <UserProfile />
+            </SidebarHeader>
             <SidebarContent>
                 <SidebarGroup>
-                    <SidebarGroupLabel>Application</SidebarGroupLabel>
+                    <SidebarGroupLabel>Overview</SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
-                            {items.map((item) => (
-                                <SidebarMenuItem key={item.title}>
+                            {data.overview.map((item, index) => (
+                                <SidebarMenuItem key={index}>
                                     <SidebarMenuButton asChild>
-                                        <a href={item.url}>
+                                        <Link href="#">
                                             <item.icon />
-                                            <span>{item.title}</span>
-                                        </a>
+                                            <span>{item.name}</span>
+                                        </Link>
+                                    </SidebarMenuButton>
+                                </SidebarMenuItem>
+                            ))}
+                        </SidebarMenu>
+                    </SidebarGroupContent>
+                </SidebarGroup>
+                {/* Content Management Nav items */}
+                <SidebarGroup>
+                    <SidebarGroupLabel>Pages (Content Management)</SidebarGroupLabel>
+                    <SidebarGroupContent>
+                        <SidebarMenu>
+                            {data.contentManagement.map((item, index) => (
+                                <SidebarMenuItem key={index}>
+                                    <SidebarMenuButton asChild>
+                                        <Link href="#">
+                                            <item.icon />
+                                            <span>{item.name}</span>
+                                        </Link>
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
                             ))}
@@ -62,6 +131,10 @@ export function AppSidebar() {
                     </SidebarGroupContent>
                 </SidebarGroup>
             </SidebarContent>
+            <SidebarFooter>
+                <NavUser user={data.user} />
+            </SidebarFooter>
+            <SidebarRail />
         </Sidebar>
     )
 }
