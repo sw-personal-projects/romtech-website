@@ -22,7 +22,26 @@ export const announcements = pgTable("announcements", {
 });
 
 
-// #create relations
+export const visionMissions = pgTable("vision_missions", {
+  id: serial("id").primaryKey(),
+  vision: text("vision").notNull(),
+  mission: text("mission").notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow().$onUpdate(() => new Date()),
+});
+
+export const teamMembers = pgTable("team_members", {
+  id: serial("id").primaryKey(),
+  name: varchar("name").notNull(),
+  image: varchar("image").notNull(),
+  position: varchar("position").notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow().$onUpdate(() => new Date()),
+});
+
+
+
+// #relations
 // announcement to user
 export const announcementRelations = relations(announcements, ({ one }) => ({
   user: one(users, {

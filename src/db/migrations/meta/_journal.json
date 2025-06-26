@@ -8,6 +8,20 @@
       "when": 1750833449712,
       "tag": "0000_slow_strong_guy",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1750928632398,
+      "tag": "0001_gigantic_sandman",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1750930599126,
+      "tag": "0002_common_luminals",
+      "breakpoints": true
     }
   ]
 }

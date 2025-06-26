@@ -21,7 +21,6 @@ export default function RootLayout(
     <html lang="en" suppressHydrationWarning>
       <head />
       <body className="relative min-h-[100vh] w-full bg-background">
-
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

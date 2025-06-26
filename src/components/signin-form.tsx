@@ -15,12 +15,13 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Loader2 } from "lucide-react";
 
 const formSchema = z.object({
     email: z.string().email("Please enter a valid email address"),
-    password: z.string().min(6, "Password must be at least 6 characters"),
+    password: z.string().min(1, "Password is required"),
 });
 
 export default function SignInForm() {
@@ -60,13 +61,23 @@ export default function SignInForm() {
     };
 
     return (
-        <Card className="w-full max-w-md">
+        <Card className="max-w-[500px] w-full shadow-none border-none bg-transparent">
             <CardHeader>
-                <CardTitle className="text-2xl">Sign In</CardTitle>
+                <CardTitle className="text-3xl">Sign In</CardTitle>
+                <CardDescription>
+                    Sign in to your account to continue
+                </CardDescription>
             </CardHeader>
             <CardContent>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 mt-5">
+                        {error && (
+                            <Alert variant="destructive">
+                                <AlertDescription>
+                                    {error === "CredentialsSignin" ? "Invalid credentials! Try again." : error}
+                                </AlertDescription>
+                            </Alert>
+                        )}
                         <FormField
                             control={form.control}
                             name="email"
@@ -93,7 +104,7 @@ export default function SignInForm() {
                                     <FormLabel>Password</FormLabel>
                                     <FormControl>
                                         <Input
-                                            placeholder="••••••"
+                                            placeholder="••••••••••••"
                                             {...field}
                                             type="password"
                                         />
@@ -102,17 +113,8 @@ export default function SignInForm() {
                                 </FormItem>
                             )}
                         />
-
-                        {error && (
-                            <Alert variant="destructive">
-                                <AlertDescription>
-                                    {error === "CredentialsSignin" ? "Invalid email or password" : error}
-                                </AlertDescription>
-                            </Alert>
-                        )}
-
-                        <Button type="submit" className="w-full" disabled={isLoading}>
-                            {isLoading ? "Signing in..." : "Sign In"}
+                        <Button type="submit" className="w-full mt-5" disabled={isLoading}>
+                            {isLoading ? <Loader2 className="w-4 h-4 mr-2" /> : "Sign In"}
                         </Button>
                     </form>
                 </Form>

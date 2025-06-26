@@ -12,6 +12,7 @@ import {
     Settings,
     Users,
 } from "lucide-react"
+import { usePathname } from "next/navigation"
 
 import {
     Sidebar,
@@ -29,43 +30,40 @@ import {
 import { NavUser } from "./nav-user"
 import { UserProfile } from "./user-profile"
 import Link from "next/link"
+import { useSession } from "next-auth/react"
+import { cn } from "@/lib/utils"
 
 // nav items data.
 const data = {
-    user: {
-        name: "Sonam Wangchuk",
-        email: "s.wangchuk@romtech.bt",
-        avatar: "/avatars/shadcn.jpg",
-    },
     contentManagement: [
         {
             name: "Home",
-            url: "/pages/home",
+            url: "/dashboard/pages/home",
             icon: Home
         },
         {
             name: "About",
-            url: "/pages/about",
+            url: "/dashboard/pages/about",
             icon: Info
         },
         {
             name: "Contact",
-            url: "/pages/contact",
+            url: "/dashboard/pages/contact",
             icon: Mail
         },
         {
             name: "Services",
-            url: "/pages/services",
+            url: "/dashboard/pages/services",
             icon: Settings
         },
         {
             name: "Projects",
-            url: "/pages/projects",
+            url: "/dashboard/pages/projects",
             icon: FolderKanban
         },
         {
-            name: "Announcements",
-            url: "/pages/announcements",
+            name: "Announcement",
+            url: "/dashboard/pages/announcement",
             icon: Megaphone
         }
     ],
@@ -89,6 +87,23 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+    const session = useSession();
+    const pathname = usePathname();
+    const user = {
+        name: session.data?.user?.name || "",
+        email: session.data?.user?.email || "",
+    }
+
+    // Function to check if a navigation item is active
+    const isActive = (url: string) => {
+        // For dashboard root, check exact match
+        if (url === "/dashboard") {
+            return pathname === "/dashboard/overview";
+        }
+        // For other pages, check if pathname starts with the url
+        return pathname.startsWith(url);
+    };
+
     return (
         <Sidebar collapsible="icon" {...props}>
             <SidebarHeader>
@@ -101,8 +116,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         <SidebarMenu>
                             {data.overview.map((item, index) => (
                                 <SidebarMenuItem key={index}>
-                                    <SidebarMenuButton asChild>
-                                        <Link href="#">
+                                    <SidebarMenuButton
+                                        asChild
+                                        className={cn(
+                                            "hover:bg-primary hover:text-primary-foreground",
+                                            isActive(item.url) && "bg-primary text-primary-foreground"
+                                        )}
+                                    >
+                                        <Link href={item.url}>
                                             <item.icon />
                                             <span>{item.name}</span>
                                         </Link>
@@ -119,8 +140,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         <SidebarMenu>
                             {data.contentManagement.map((item, index) => (
                                 <SidebarMenuItem key={index}>
-                                    <SidebarMenuButton asChild>
-                                        <Link href="#">
+                                    <SidebarMenuButton
+                                        asChild
+                                        className={cn(
+                                            "hover:bg-primary hover:text-primary-foreground",
+                                            isActive(item.url) && "bg-primary text-primary-foreground"
+                                        )}
+                                    >
+                                        <Link href={item.url}>
                                             <item.icon />
                                             <span>{item.name}</span>
                                         </Link>
@@ -132,7 +159,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 </SidebarGroup>
             </SidebarContent>
             <SidebarFooter>
-                <NavUser user={data.user} />
+                <NavUser user={user} />
             </SidebarFooter>
             <SidebarRail />
         </Sidebar>

@@ -41,7 +41,7 @@ export function UserProfileNav() {
             >
                 <DropdownMenuLabel className='font-normal'>
                     <div className='flex flex-col space-y-1'>
-                        <p className='text-sm leading-none font-medium'>
+                        <p className='text-sm leading-none font-medium capitalize'>
                             {user.fullName}
                         </p>
                         <p className='text-muted-foreground text-xs leading-none'>
@@ -54,9 +54,7 @@ export function UserProfileNav() {
                     <DropdownMenuItem onClick={() => router.push('/dashboard/profile')}>
                         Profile
                     </DropdownMenuItem>
-                    <DropdownMenuItem>Billing</DropdownMenuItem>
-                    <DropdownMenuItem>Settings</DropdownMenuItem>
-                    <DropdownMenuItem>New Team</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => router.push('/dashboard/settings')}>Settings</DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/auth/signin" })}>
