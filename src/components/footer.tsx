@@ -56,15 +56,17 @@ export default function Footer() {
                             </li>
                             <li className="flex items-center gap-3">
                                 <Phone size={16} className="flex-shrink-0" />
-                                <a href="tel:+97517773054" className="hover:text-white text-sm transition-all duration-200">+975-17773054</a>
+                                <Link href="tel:+97517815095" className="hover:text-white text-sm transition-all duration-200">
+                                    +975-17815095
+                                </Link>
                             </li>
                             <li className="flex items-center gap-3">
                                 <Mail size={16} className="flex-shrink-0" />
-                                <a href="mailto:romtech@romtech.bt" className="hover:text-white text-sm transition-all duration-200">romtech@romtech.bt</a>
+                                <Link href="mailto:romtech@romtech.bt" className="hover:text-white text-sm transition-all duration-200">romtech@romtech.bt</Link>
                             </li>
                             <li className="flex items-center gap-3 text-sm">
                                 <Clock size={16} className="flex-shrink-0" />
-                                <span>Mon - Fri: 10:00 AM - 5:00 PM (BST)</span>
+                                <span>Mon - Fri: 10:00 AM - 6:00 PM (BST)</span>
                             </li>
                         </ul>
                     </div>
