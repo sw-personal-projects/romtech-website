@@ -1,3 +1,5 @@
+'use server';
+
 import { db } from "@/db";
 import { teamMembers } from "@/db/schema";
 import { authOptions } from "@/lib/auth";
