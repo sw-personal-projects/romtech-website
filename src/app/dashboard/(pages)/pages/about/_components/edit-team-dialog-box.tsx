@@ -19,13 +19,13 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { PlusIcon, Upload, Loader2 } from "lucide-react"
+import { Upload, Loader2, PencilIcon } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { cn } from "@/lib/utils"
 import * as z from "zod"
 import Image from "next/image"
-import { addTeamMember } from "@/actions/about/team-members-actions"
+import { updateTeamMember } from "@/actions/about/team-members-actions"
 
 const FormSchema = z.object({
     name: z.string().min(1, {
@@ -40,20 +40,28 @@ const FormSchema = z.object({
         .refine(
             (files) => files?.[0]?.type?.startsWith("image/"),
             "File must be an image"
-        ),
+        )
+        .optional(),
 })
 
 type FormData = z.infer<typeof FormSchema>
 
-export default function AddTeamDialogBox() {
+type TeamMember = {
+    id: string
+    name: string
+    position: string
+    image: string
+}
+
+export default function EditTeamDialogBox({ teamMember }: { teamMember: TeamMember }) {
     const [previewUrl, setPreviewUrl] = useState<string | null>(null)
     const [open, setOpen] = useState(false)
 
     const form = useForm<FormData>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
-            name: "",
-            position: "",
+            name: teamMember.name || "",
+            position: teamMember.position || "",
             image: undefined,
         },
     })
@@ -72,31 +80,32 @@ export default function AddTeamDialogBox() {
         const formData = new FormData()
         formData.append("name", data.name)
         formData.append("position", data.position)
-        formData.append("image", data.image[0])
+        if (data.image && data.image[0]) {
+            formData.append("image", data.image[0])
+        }
 
         try {
-            await addTeamMember(formData)
-            toast.success("Team member added successfully!")
+            await updateTeamMember(Number(teamMember.id), formData)
+            toast.success("Team member updated successfully!")
             form.reset()
             setPreviewUrl(null)
             setOpen(false) // ✅ close dialog on success
         } catch (error: any) {
             console.error("Upload error:", error)
-            toast.error(error.message || "Failed to add team member.")
+            toast.error(error.message || "Failed to update team member.")
         }
     }
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button variant="outline">
-                    <PlusIcon className="w-4 h-4 mr-2" />
-                    Add Team Member
+                <Button variant="outline" className="w-10 flex justify-center items-center">
+                    <PencilIcon className="w-4 h-4" />
                 </Button>
             </DialogTrigger>
             <DialogContent className="p-10 border border-primary/30">
                 <DialogHeader>
-                    <DialogTitle>Add New Team Member</DialogTitle>
+                    <DialogTitle>Edit Team Member</DialogTitle>
                 </DialogHeader>
 
                 <Form {...form}>
@@ -137,7 +146,7 @@ export default function AddTeamDialogBox() {
                             name="image"
                             render={({ field: { onChange } }) => (
                                 <FormItem>
-                                    <FormLabel>Image</FormLabel>
+                                    <FormLabel>New Image (Optional)</FormLabel>
                                     <FormControl>
                                         <div>
                                             <input
@@ -187,11 +196,11 @@ export default function AddTeamDialogBox() {
                             {form.formState.isSubmitting ? (
                                 <>
                                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                    Adding...
+                                    Updating...
                                 </>
                             ) : (
                                 <>
-                                    Add Team Member
+                                    Update Team Member
                                 </>
                             )}
                         </Button>

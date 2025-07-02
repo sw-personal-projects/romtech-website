@@ -1,36 +1,78 @@
 'use server';
 
-import { db } from "@/db";
-import { teamMembers } from "@/db/schema";
-import { authOptions } from "@/lib/auth";
-import { getServerSession } from "next-auth";
-import { revalidateTag } from "next/cache";
+import { revalidateTag } from 'next/cache';
+import { cookies } from 'next/headers';
 
-// create team member
-export async function createTeamMember(data: 
-    { 
-        name: string; 
-        position: string; 
-        image: string; 
-    }) {
-    try {
-      // check if user is authenticated
-      const session = await getServerSession(authOptions);
-      if (!session?.user) {
-        return { message: 'Unauthorized', data: null };
-      }
-  
-      const result = await db.insert(teamMembers).values({
-        name: data.name,
-        position: data.position,
-        image: data.image,
-      }).returning();
-  
-      revalidateTag('team-members');
-  
-      return { message: 'Created successfully', data: result, status: 201 };
-    } catch (error) {
-      console.error('Error creating team member:', error);
-      return { message: 'Error creating team member', data: null, status: 500 };
-    }
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+// to create new team member
+export async function addTeamMember(formData: FormData) {
+  const cookieStore = await cookies();
+
+  const response = await fetch(`${API_URL}/api/team-members`, {
+    method: 'POST',
+    body: formData,
+    headers: {
+      cookie: cookieStore.toString(),
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to add team member');
   }
+
+  revalidateTag('teamMembers');
+  return response.json();
+}
+
+// to get all team members
+export async function getTeamMembers() {
+  const response = await fetch(`${API_URL}/api/team-members`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  return response.json();
+}
+
+// to delete a team member
+export async function deleteTeamMember(id: number) {
+  const cookieStore = await cookies();
+  console.log("cookieStore", cookieStore.toString())
+
+  const response = await fetch(`${API_URL}/api/team-members/${id}`, {
+    method: 'DELETE',
+    headers: {
+      cookie: cookieStore.toString(),
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to delete team member');
+  }
+
+  revalidateTag('teamMembers');
+  return response.json();
+}
+
+// to update a team member
+export async function updateTeamMember(id: number, formData: FormData) {
+  const cookieStore = await cookies();
+
+  const response = await fetch(`${API_URL}/api/team-members/${id}`, {
+    method: 'PATCH',
+    body: formData,
+    headers: {
+      cookie: cookieStore.toString(),
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to update team member');
+  }
+
+  revalidateTag('teamMembers');
+  return response.json();
+}
+
