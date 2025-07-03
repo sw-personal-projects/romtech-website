@@ -1,12 +1,12 @@
-import { fetchProjectData } from "@/actions/project-actions";
 import { Button } from "../ui/button";
 import { ProjectsSlider } from "./project-slider";
 import PopUp from "../animations/pop-up";
 import FlipIn from "../animations/flip-in";
 import Link from "next/link";
+import { getProjects } from "@/actions/project/project-actions";
 
 export default async function OurProjectSection() {
-    const projectData = await fetchProjectData();
+    const projectData = await getProjects();
     return (
         <div className="min-h-[50vh]">
             <div className="container md:mt-[150px] mt-[50px] mx-auto px-5">

@@ -1,13 +1,13 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import { fetchProjectData } from "@/actions/project-actions";
 import { CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { format } from "date-fns";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { getProjectById } from "@/actions/project/project-actions";
+import { format } from "date-fns";
 
 type Props = {
     params: Promise<{ id: string }>
@@ -19,15 +19,14 @@ type Project = {
     imageUrl: string;
     title: string;
     desc: string;
-    detailDes: string[];
+    detailDescription: string[];
     category: string;
-    createdAt: string | Date;
+    createdAt: string;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { id } = await params
-    const data = await fetchProjectData().catch(() => [])
-    const project = data.find((item: Project) => item.id === Number.parseInt(id))
+    const project: Project | null = await getProjectById(Number(id))
 
     return {
         title: project ? `ROM-TECH | ${project.title}` : "Project Not Found",
@@ -44,15 +43,23 @@ export default async function ProjectDetails({
     params: Promise<{ id: string }>
 }) {
     const { id } = await params;
-    const data = await fetchProjectData().catch(() => []);
-    const project = data.find((item: Project) => item.id === parseInt(id));
+    const project: Project | null = await getProjectById(Number(id))
+
+    // 🧼 Fix the detailDescription double-string issue
+    if (
+        project &&
+        Array.isArray(project.detailDescription) &&
+        typeof project.detailDescription[0] === "string"
+    ) {
+        try {
+            project.detailDescription = JSON.parse(project.detailDescription[0])
+        } catch (error) {
+            console.error("Failed to parse detailDescription:", error)
+            project.detailDescription = []
+        }
+    }
 
     if (!project) return notFound();
-
-    const formattedDate = format(
-        project.createdAt instanceof Date ? project.createdAt : new Date(project.createdAt),
-        "MMMM d, yyyy"
-    );
 
     return (
         <div className="container mx-auto px-4 py-8 md:py-12 max-w-6xl">
@@ -66,14 +73,13 @@ export default async function ProjectDetails({
             </div>
 
             <div className="grid gap-8 md:grid-cols-2 md:gap-12">
-                <div className="relative h-64 md:h-[600px] w-full rounded-lg overflow-hidden shadow-lg md:sticky md:top-24 self-start">
+                <div className="w-full h-[500px]">
                     <Image
                         src={project.imageUrl}
                         alt={project.title}
-                        fill
-                        className="object-cover w-full h-full hover:scale-105 transition-transform duration-500"
-                        priority
-                        sizes="(max-width: 768px) 100vw, 50vw"
+                        width={500}
+                        height={500}
+                        className="object-cover w-full h-full border-2 border-primary/20 hover:scale-105 transition-transform duration-500 rounded-lg"
                     />
                 </div>
 
@@ -93,17 +99,15 @@ export default async function ProjectDetails({
                                     {project.category}
                                 </Badge>
                                 <Badge variant="outline" className="px-3 py-1 text-sm font-medium">
-                                    {formattedDate}
+                                    {format(project.createdAt, "MMMM d, yyyy")}
                                 </Badge>
                             </div>
                         </div>
                     </CardHeader>
 
                     <CardContent className="px-0 space-y-6">
-                        {project.detailDes.map((item: string, index: number) => (
-                            <p key={index} className="text-primary/80 text-[15px]">
-                                {item}
-                            </p>
+                        {project?.detailDescription?.map((d, i) => (
+                            <p key={i} className="text-primary/80 text-[15px]">{d}</p>
                         ))}
                     </CardContent>
 

@@ -75,12 +75,12 @@ const data = {
         },
         {
             name: "Analytics",
-            url: "/analytics",
+            url: "/dashboard/analytics",
             icon: PieChart,
         },
         {
             name: "User Management",
-            url: "/users",
+            url: "/dashboard/users",
             icon: Users
         }
     ],

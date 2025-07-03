@@ -4,7 +4,16 @@ const nextConfig: NextConfig = {
   /* config options here */
   skipMiddlewareUrlNormalize: true,
   images: {
-    domains: ['res.cloudinary.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'romtech.bt',
+      },
+    ],
   },
 };
 

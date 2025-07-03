@@ -1,4 +1,4 @@
-import { integer, pgTable, serial, text, timestamp, varchar } from "drizzle-orm/pg-core";
+import { integer, json, pgTable, serial, text, timestamp, varchar } from "drizzle-orm/pg-core";
 
 import { relations } from "drizzle-orm";
 
@@ -39,6 +39,16 @@ export const teamMembers = pgTable("team_members", {
   updatedAt: timestamp("updated_at").notNull().defaultNow().$onUpdate(() => new Date()),
 });
 
+export const ourProjects = pgTable("our_projects", {
+  id: serial("id").primaryKey(),
+  title: varchar("title").notNull(),
+  category: varchar("category").notNull(),
+  desc: text("desc").notNull(),
+  detailDescription: json("detail_description").notNull().$type<string[]>(),
+  imageUrl: varchar("image_url").notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow().$onUpdate(() => new Date()),
+});
 
 
 // #relations

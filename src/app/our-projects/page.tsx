@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Image from "next/image";
 import { ProjectGrid } from "./_components/project-card";
-import { fetchProjectData } from "@/actions/project-actions";
+import { getProjects } from "@/actions/project/project-actions";
 
 export const metadata: Metadata = {
     title: "ROM-TECH | OUR PROJECTS",
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 };
 
 export default async function OurProjects() {
-    const projectData = await fetchProjectData();
+    const projectData = await getProjects();
     return (
         <div>
             <div className="w-full h-[40vh] relative">
