@@ -3,7 +3,9 @@ import OurProjectSection from "@/components/home/our-project-section";
 import ProgrammingLanguagesSection from "@/components/home/programming-language-section";
 import ServicesSection from "@/components/home/services-section";
 import WorkProcessSection from "@/components/home/work-process-section";
+import { Suspense } from "react";
 
+export const dynamic = 'force-dynamic';
 
 export default function Home() {
   return (
@@ -18,7 +20,9 @@ export default function Home() {
       <ServicesSection />
 
       {/* Our Project Section */}
-      <OurProjectSection />
+      <Suspense fallback={<div>Loading...</div>}>
+        <OurProjectSection />
+      </Suspense>
 
       {/* Programming Languages Section */}
       <ProgrammingLanguagesSection />

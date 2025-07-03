@@ -7,6 +7,9 @@ import { getProjects } from "@/actions/project/project-actions";
 
 export default async function OurProjectSection() {
     const projectData = await getProjects();
+    if (!projectData) {
+        return <div>No projects found</div>
+    }
     return (
         <div className="min-h-[50vh]">
             <div className="container md:mt-[150px] mt-[50px] mx-auto px-5">

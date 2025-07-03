@@ -1,7 +1,10 @@
 import { Metadata } from "next";
 import Image from "next/image";
-import { ProjectGrid } from "./_components/project-card";
-import { getProjects } from "@/actions/project/project-actions";
+import ProjectList from "./_components/project-list";
+import { Suspense } from "react";
+import { Card } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+
 
 export const metadata: Metadata = {
     title: "ROM-TECH | OUR PROJECTS",
@@ -9,7 +12,6 @@ export const metadata: Metadata = {
 };
 
 export default async function OurProjects() {
-    const projectData = await getProjects();
     return (
         <div>
             <div className="w-full h-[40vh] relative">
@@ -30,7 +32,23 @@ export default async function OurProjects() {
 
             {/* Our Project Section */}
             <div className="container mx-auto mt-10 px-4 md:px-0">
-                <ProjectGrid projects={projectData} />
+                <Suspense fallback={<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+                    {Array.from({ length: 8 }).map((_, index) => (
+                        <Card key={index} className="p-3">
+                            <Skeleton className="w-full h-[200px]" />
+                            <div className="flex flex-col gap-2">
+                                <Skeleton className="w-full h-4" />
+                                <Skeleton className="w-full h-4" />
+                            </div>
+                            <div className="flex gap-4 justify-between">
+                                <Skeleton className="w-full h-8" />
+                                <Skeleton className="w-full h-8" />
+                            </div>
+                        </Card>
+                    ))}
+                </div>}>
+                    <ProjectList />
+                </Suspense>
             </div>
         </div>
     );

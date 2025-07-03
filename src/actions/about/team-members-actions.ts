@@ -27,13 +27,19 @@ export async function addTeamMember(formData: FormData) {
 
 // to get all team members
 export async function getTeamMembers() {
-  const response = await fetch(`${API_URL}/api/team-members`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-  return response.json();
+  try {
+    const response = await fetch(`${API_URL}/api/team-members`);
+
+    if (!response.ok) {
+      console.error(`API responded with ${response.status}: ${response.statusText}`);
+      return [];
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error("Error fetching team members:", error);
+    throw new Error('Failed to get team members');
+  }
 }
 
 // to delete a team member

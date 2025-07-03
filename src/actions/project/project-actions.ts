@@ -28,13 +28,20 @@ export async function addProject(formData: FormData) {
 
 // to get all projects
 export async function getProjects() {
-    const response = await fetch(`${API_URL}/api/projects`);
-    if (response.status !== 200) {
-        throw new Error('Failed to get projects');
-    }
-    return response.json();
-}
+    try {
+        const response = await fetch(`${API_URL}/api/projects`);
 
+        if (!response.ok) {
+            console.error(`API responded with ${response.status}: ${response.statusText}`);
+            return [];
+        }
+
+        return response.json();
+    } catch (error) {
+        console.error("Error fetching projects:", error);
+        return [];
+    }
+}
 // to delete a project
 export async function deleteProject(id: number) {
     const cookieStore = await cookies();
@@ -79,6 +86,6 @@ export async function getProjectById(id: number) {
         return response.json();
     } catch (error) {
         console.error("Error fetching project:", error);
-        return null;
+        throw new Error('Failed to get project');
     }
 }

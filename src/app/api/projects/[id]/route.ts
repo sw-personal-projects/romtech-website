@@ -23,10 +23,10 @@ export async function GET(request: NextRequest, context: { params: Promise<{ id:
 }
 
 // Update Project
-export async function PATCH(request: NextRequest, context: { params: { id: string } }) {
+export async function PATCH(request: NextRequest, context: { params: Promise<{ id: string }> }) {
   return withAuth(async () => {
       try {
-          const { id } = context.params
+          const { id } = await context.params
           const idNumber = Number(id)
 
           if (isNaN(idNumber)) {
