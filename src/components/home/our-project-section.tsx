@@ -5,6 +5,8 @@ import FlipIn from "../animations/flip-in";
 import Link from "next/link";
 import { getProjects } from "@/actions/project/project-actions";
 
+export const dynamic = "force-dynamic";
+
 export default async function OurProjectSection() {
     const projectData = await getProjects();
 

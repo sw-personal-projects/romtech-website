@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { Card } from "@/components/ui/card"
 import Image from "next/image"
 import EditTeamDialogBox from "./edit-team-dialog-box"

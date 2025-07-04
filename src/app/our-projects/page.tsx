@@ -7,10 +7,13 @@ import { getProjects } from "@/actions/project/project-actions";
 import { ProjectGrid } from "./_components/project-card";
 
 
+
 export const metadata: Metadata = {
     title: "ROM-TECH | OUR PROJECTS",
     description: "Software company specializing in web, app development and technology solutions.",
 };
+
+export const dynamic = "force-dynamic";
 
 export default async function OurProjects() {
     const projectData = await getProjects();

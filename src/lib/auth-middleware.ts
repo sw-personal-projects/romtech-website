@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth"
 import { type NextRequest, NextResponse } from "next/server"
 import { authOptions } from "./auth"
+import { redirect } from 'next/navigation'
 
 export async function withAuth(
   handler: (request: NextRequest, context?: { params: string }) => Promise<NextResponse>,
@@ -10,7 +11,7 @@ export async function withAuth(
   const session = await getServerSession(authOptions)
 
   if (!session) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    redirect('/auth/signin')
   }
 
   return handler(request, context)

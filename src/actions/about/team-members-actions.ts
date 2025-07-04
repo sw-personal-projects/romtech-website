@@ -60,7 +60,6 @@ export async function addTeamMember(formData: FormData) {
 export async function getTeamMembers() {
   try {
     const response = await db.select().from(teamMembers)
-
     return response;
   } catch (error) {
     console.error("Error fetching team members:", error);

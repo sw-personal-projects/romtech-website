@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { Card, CardDescription, CardContent } from "@/components/ui/card"
 import Image from "next/image"
 import { format } from "date-fns"
@@ -14,6 +16,8 @@ export interface ProjectListProps {
     category: string
     createdAt: Date
 }
+
+
 export default async function ProjectList() {
     const projectData: ProjectListProps[] = await getProjects()
     return (
