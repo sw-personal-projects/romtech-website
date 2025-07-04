@@ -5,7 +5,7 @@ import EditTeamDialogBox from "./edit-team-dialog-box"
 import DeleteTeamDialogBox from "./delete-team-dialog-box"
 
 type TeamMember = {
-    id: string
+    id: number
     name: string
     position: string
     image: string

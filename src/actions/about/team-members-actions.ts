@@ -1,5 +1,7 @@
 'use server';
 
+import { db } from '@/db';
+import { teamMembers } from '@/db/schema';
 import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 
@@ -28,14 +30,8 @@ export async function addTeamMember(formData: FormData) {
 // to get all team members
 export async function getTeamMembers() {
   try {
-    const response = await fetch(`${API_URL}/api/team-members`);
-
-    if (!response.ok) {
-      console.error(`API responded with ${response.status}: ${response.statusText}`);
-      return [];
-    }
-
-    return response.json();
+    const response = await db.select().from(teamMembers)
+    return response;
   } catch (error) {
     console.error("Error fetching team members:", error);
     throw new Error('Failed to get team members');

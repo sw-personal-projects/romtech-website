@@ -8,11 +8,13 @@ import { useRouter } from "next/navigation";
 
 interface Project {
     id: number;
-    imageUrl: string;
     title: string;
-    desc: string;
     category: string;
-    createdAt: string;
+    desc: string;
+    detailDescription: string[];
+    imageUrl: string;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 interface ProjectGridProps {

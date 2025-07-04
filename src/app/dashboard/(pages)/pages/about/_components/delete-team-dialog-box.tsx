@@ -14,7 +14,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 type TeamMember = {
-    id: string
+    id: number
     name: string
     position: string
     image: string

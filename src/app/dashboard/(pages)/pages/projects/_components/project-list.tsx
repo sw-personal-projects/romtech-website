@@ -12,7 +12,7 @@ export interface ProjectListProps {
     desc: string
     imageUrl: string
     category: string
-    createdAt: string
+    createdAt: Date
 }
 export default async function ProjectList() {
     const projectData: ProjectListProps[] = await getProjects()

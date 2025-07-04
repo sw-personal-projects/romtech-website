@@ -1,9 +1,10 @@
 import { Metadata } from "next";
 import Image from "next/image";
-import ProjectList from "./_components/project-list";
 import { Suspense } from "react";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { getProjects } from "@/actions/project/project-actions";
+import { ProjectGrid } from "./_components/project-card";
 
 
 export const metadata: Metadata = {
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
 };
 
 export default async function OurProjects() {
+    const projectData = await getProjects();
     return (
         <div>
             <div className="w-full h-[40vh] relative">
@@ -47,7 +49,7 @@ export default async function OurProjects() {
                         </Card>
                     ))}
                 </div>}>
-                    <ProjectList />
+                    <ProjectGrid projects={projectData} />
                 </Suspense>
             </div>
         </div>

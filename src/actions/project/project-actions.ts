@@ -1,5 +1,8 @@
 'use server';
 
+import { db } from '@/db';
+import { ourProjects } from '@/db/schema';
+import { desc } from 'drizzle-orm';
 import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 
@@ -29,19 +32,14 @@ export async function addProject(formData: FormData) {
 // to get all projects
 export async function getProjects() {
     try {
-        const response = await fetch(`${API_URL}/api/projects`);
-
-        if (!response.ok) {
-            console.error(`API responded with ${response.status}: ${response.statusText}`);
-            return [];
-        }
-
-        return response.json();
+        const response = await db.select().from(ourProjects).orderBy(desc(ourProjects.createdAt));
+        return response; // It's already an array of project objects
     } catch (error) {
         console.error("Error fetching projects:", error);
         return [];
     }
 }
+
 // to delete a project
 export async function deleteProject(id: number) {
     const cookieStore = await cookies();

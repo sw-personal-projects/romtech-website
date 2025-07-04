@@ -4,15 +4,7 @@ import { db } from "@/db"
 import { teamMembers } from "@/db/schema"
 import { withAuth } from "@/lib/auth-middleware"
 
-export async function GET() {
-  try {
-    const members = await db.select().from(teamMembers)
-    return NextResponse.json(members)
-  } catch (error) {
-    console.error("Error fetching team members:", error)
-    return NextResponse.json({ error: "Failed to fetch team members" }, { status: 500 })
-  }
-}
+
 
 export async function POST(request: NextRequest) {
     return withAuth(async (req: NextRequest) => {

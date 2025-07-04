@@ -47,7 +47,7 @@ const FormSchema = z.object({
 type FormData = z.infer<typeof FormSchema>
 
 type TeamMember = {
-    id: string
+    id: number
     name: string
     position: string
     image: string

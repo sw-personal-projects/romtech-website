@@ -7,6 +7,7 @@ import { getProjects } from "@/actions/project/project-actions";
 
 export default async function OurProjectSection() {
     const projectData = await getProjects();
+
     if (!projectData) {
         return <div>No projects found</div>
     }

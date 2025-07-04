@@ -1,20 +1,9 @@
 import { ourProjects } from "@/db/schema";
 import { db } from "@/db";
 import { NextRequest, NextResponse } from "next/server";
-import { desc } from "drizzle-orm";
 import { withAuth } from "@/lib/auth-middleware";
 import { uploadImage } from "@/lib/cloudinary";
 
-
-export async function GET() {
-    try {
-        const projects = await db.select().from(ourProjects).orderBy(desc(ourProjects.createdAt));
-        return NextResponse.json(projects, { status: 200 });
-    } catch (error) {
-        console.error("Error fetching projects:", error);
-        return NextResponse.json({ error: "Failed to fetch projects" }, { status: 500 });
-    }
-}
 
 // POST /api/projects
 export const POST = (req: NextRequest) =>

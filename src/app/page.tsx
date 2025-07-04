@@ -5,8 +5,6 @@ import ServicesSection from "@/components/home/services-section";
 import WorkProcessSection from "@/components/home/work-process-section";
 import { Suspense } from "react";
 
-export const dynamic = 'force-dynamic';
-
 export default function Home() {
   return (
     <main className="w-full min-h-[100vh] bg-background">

@@ -15,12 +15,13 @@ import { useRouter } from "next/navigation";
 
 type Project = {
     id: number;
-    imageUrl: string;
     title: string;
-    desc: string;
-    detailDes: string[];
     category: string;
-    createdAt: string;
+    desc: string;
+    detailDescription: string[];
+    imageUrl: string;
+    createdAt: Date;
+    updatedAt: Date;
 };
 
 
