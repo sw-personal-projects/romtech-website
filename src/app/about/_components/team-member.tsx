@@ -87,6 +87,37 @@ export default function TeamSection() {
             imageUrl: '/assets/team-member/tandin-phuntsho.jpeg',
         },
         {
+            name: 'Ngawang Dorji',
+            role: 'Software Engineer',
+            imageUrl: '/assets/team-member/ngawang-dorji.jpeg',
+        },
+        {
+            name: 'Sonam Tenzin',
+            role: 'Software Engineer',
+            imageUrl: '/assets/team-member/sonam-tenzin.jpeg',
+        },
+        {
+            name: 'Asseh Nepal',
+            role: 'Software Engineer',
+            imageUrl: '/assets/team-member/assh-nepal.jpeg',
+        },
+        {
+            name: 'Sumit Adhikari',
+            role: 'Software Engineer',
+            imageUrl: '/assets/team-member/sumitadhikari.jpeg',
+        },
+        {
+            name: "Udap Kharka",
+            role: 'Software Engineer',
+            imageUrl: '/assets/team-member/udapkharka.jpeg',
+        },
+        {
+            name: "Jimpa Jamtsho",
+            role: 'Software Engineer',
+            imageUrl: '/assets/team-member/jimpa-jamtsho.jpeg',
+
+        },
+        {
             name: 'Karma Lhamo',
             role: 'Caretaker',
             imageUrl: '/assets/team-member/karma-lhamo.jpeg',

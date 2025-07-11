@@ -6,10 +6,9 @@ import MainLayout from "@/components/layouts/main-layout";
 
 export const metadata: Metadata = {
   title: "ROM-TECH",
-  description: "Software company specializing in web, app development and technology solutions.",
+  description: "Software company in bhutan specializing in web, app development and technology solutions.",
   keywords: ["ROM-Tech", 'ROM', "technology", "software development", "tech solutions"],
 };
-
 
 export default function RootLayout(
   { children }:
