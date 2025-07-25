@@ -120,12 +120,17 @@ export default function TeamSection() {
         {
             name: "Jigme Namgyal",
             role: 'Software Engineer',
-            imageUrl: '/assets/team-member/jigme-namgyel.jpeg',
+            imageUrl: '/assets/team-member/jigme-namgyel.png',
+        },
+        {
+            name: "Kinga Tshering",
+            role: 'Business Analyst',
+            imageUrl: '/assets/team-member/kinga.png',
         },
         {
             name: 'Karma Lhamo',
             role: 'Caretaker',
-            imageUrl: '/assets/team-member/karma-lhamo.jpeg',
+            imageUrl: '/assets/team-member/karma-lhamo.png',
         },
     ];
 
